@@ -67,3 +67,9 @@ export default tseslint.config([
   },
 ])
 ```
+
+# Redux project run intruduction : 
+
+- react project setup kora with vite 
+- npm install @reduxjs/toolkit react-redux
+- Redux DevTools (chrome browser extention add)
