@@ -73,3 +73,4 @@ export default tseslint.config([
 - react project setup kora with vite 
 - npm install @reduxjs/toolkit react-redux
 - Redux DevTools (chrome browser extention add)
+- immer install (redux ar maje mutation korte help kore immer. "npm i immer" terminal a install korte hobe.)
