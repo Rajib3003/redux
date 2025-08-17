@@ -74,3 +74,22 @@ export default tseslint.config([
 - npm install @reduxjs/toolkit react-redux
 - Redux DevTools (chrome browser extention add)
 - immer install (redux ar maje mutation korte help kore immer. "npm i immer" terminal a install korte hobe.)
+- https://ui.shadcn.com/docs/installation/vite shadcn ta ei pager step vai step gulo setup korbo project a. 
+
+
+
+
+
+
+
+
+
+BMBD final selected 
+
+theme
+1. https://preview.themeforest.net/item/mintech-it-solutions-services-html5-template/full_screen_preview/29031466
+$16 
+
+icons
+1. https://storyset.com/?utm_source=chatgpt.com
+$free
