@@ -40,8 +40,7 @@ export default function TaskCard({ task }: IProps) {
                 </Button>
                 <Checkbox/>
             </div>
-        </div>
-        <p className="mt-5">{task.description}</p>
+        </div>       
     </div>
   )
 }
