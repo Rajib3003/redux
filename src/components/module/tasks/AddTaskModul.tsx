@@ -23,7 +23,7 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 
 
-import { useForm } from "react-hook-form"
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
 
 export function AddTaskModul() {
   const form = useForm({
@@ -37,14 +37,14 @@ export function AddTaskModul() {
 
   const dispatch = useAppDispatch();
 
-  function onSubmit(data: ITask) {
-    // handle form submission
-    console.log(data);
-    dispatch(addTask({
+  const onSubmit:SubmitHandler<FieldValues> = (data) => {
+
+    const payload = {
       ...data,
-      dueDate: data.dueDate.toString(), // Convert date to ISO string
-      
-    }));
+      dueDate: data.dueDate ? new Date(data.dueDate).toISOString() : "",
+    }
+   
+    dispatch(addTask(payload as ITask));
 
   }
 
