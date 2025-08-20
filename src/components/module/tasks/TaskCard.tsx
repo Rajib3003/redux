@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { ITask } from "@/types";
 import { cn } from "@/lib/utils";
-import { toggleCompleteState } from "@/redux/features/task/taskSlice";
+import { deleteTask, toggleCompleteState, updateTask } from "@/redux/features/task/taskSlice";
 import { useAppDispatch } from "@/redux/hook";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trash2 } from "lucide-react";
+
+import { Card, CardAction,  CardDescription,  CardHeader, CardTitle } from "@/components/ui/card";
+import { Trash2} from "lucide-react";
+import UpdateTaskModul from "./UpdateTaskModul";
 
 
 interface IProps {
@@ -22,6 +22,9 @@ interface IProps {
 
 export default function TaskCard({ task }: IProps) {
     const dispatch = useAppDispatch();
+    const handleUpdate = () => {
+        dispatch(updateTask(task));
+    }
   return (
     <>
 
@@ -45,7 +48,13 @@ export default function TaskCard({ task }: IProps) {
                 checked= {task.isCompleted}
                 onClick={() => dispatch(toggleCompleteState(task.id))}
                 />
-          <Button variant="link" className="p-0 text-red-500"><Trash2 /></Button>
+          <Button onClick={() => dispatch(deleteTask(task.id))} variant="link" className="p-0 text-red-500">
+            <Trash2  />            
+          </Button>
+          <Button onClick={handleUpdate} variant="link" className="p-0 text-green-500">
+            <UpdateTaskModul task={task}/>
+          </Button>
+          
           
         </CardAction>
       </CardHeader>
