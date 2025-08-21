@@ -5,5 +5,5 @@ export interface ITask {
   discription: string;
   dueDate: string; 
   isCompleted: boolean;
-  priority: 'low' | 'medium' | 'high';
+  priority: 'low' | 'medium' | 'high' | 'all';
 }

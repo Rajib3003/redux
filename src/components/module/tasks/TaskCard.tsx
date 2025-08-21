@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { ITask } from "@/types";
 import { cn } from "@/lib/utils";
-import { deleteTask, toggleCompleteState, updateTask } from "@/redux/features/task/taskSlice";
+import { deleteTask, toggleCompleteState } from "@/redux/features/task/taskSlice";
 import { useAppDispatch } from "@/redux/hook";
 
 import { Card, CardAction,  CardDescription,  CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,9 +22,9 @@ interface IProps {
 
 export default function TaskCard({ task }: IProps) {
     const dispatch = useAppDispatch();
-    const handleUpdate = () => {
-        dispatch(updateTask(task));
-    }
+    // const handleUpdate = () => {
+    //     dispatch(updateTask(task));
+    // }
   return (
     <>
 
@@ -51,9 +51,9 @@ export default function TaskCard({ task }: IProps) {
           <Button onClick={() => dispatch(deleteTask(task.id))} variant="link" className="p-0 text-red-500">
             <Trash2  />            
           </Button>
-          <Button onClick={handleUpdate} variant="link" className="p-0 text-green-500">
+          {/* <Button onClick={handleUpdate} variant="link" className="p-0 text-green-500"> */}
             <UpdateTaskModul task={task}/>
-          </Button>
+          {/* </Button> */}
           
           
         </CardAction>

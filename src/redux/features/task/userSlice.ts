@@ -57,21 +57,21 @@ const taskSlice = createSlice({
 
 export const selectTasks = (state: RootState) => {
     // const f = state.tasks.filter;
-       const filter = state.todo.filter;
-    if (filter === 'low') {                   
-            return state.todo.tasks.filter((task)=> task.priority === "low");            
-    } 
-    else if (filter === 'medium') {
-        return state.todo.tasks.filter((task)=> task.priority === "medium");                
-    }
-    else if (filter === 'high') {
-        return state.todo.tasks.filter((task)=> task.priority === "high");                
-    } else {
+    //    const filter = state.todo.filter;
+    // if (filter === 'low') {                   
+    //         return state.todo.tasks.filter((task)=> task.priority === "low");            
+    // } 
+    // else if (filter === 'medium') {
+    //     return state.todo.tasks.filter((task)=> task.priority === "medium");                
+    // }
+    // else if (filter === 'high') {
+    //     return state.todo.tasks.filter((task)=> task.priority === "high");                
+    // } else {
         return state.todo.tasks;
-    }
+    // }
 }
 export const selectFilter = (state: RootState) => { 
-            return state.todo.filter;   
+            // return state.todo.filter;   
             
 }
 export const {addTask, toggleCompleteState, deleteTask, updateTask, updateFilter} = taskSlice.actions;
