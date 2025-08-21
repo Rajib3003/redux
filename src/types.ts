@@ -7,3 +7,9 @@ export interface ITask {
   isCompleted: boolean;
   priority: 'low' | 'medium' | 'high' | 'all';
 }
+
+export interface IUser {
+  id: string;
+  name: string;
+  age : number;  
+}

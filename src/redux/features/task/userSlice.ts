@@ -1,79 +1,56 @@
 import type { RootState } from "@/redux/store";
-import type { ITask } from "@/types";
+import type { IUser } from "@/types";
 import { createSlice, nanoid, type PayloadAction } from "@reduxjs/toolkit";
 
 
 
 
 interface InistialState {
-    tasks: ITask[];  
-    filter: 'low' | 'medium' | 'high' | 'all';
+    users: IUser[];      
 }
 
 const initialState: InistialState = {
-    tasks: [],
-    filter : 'all',
+    users: [
+        {
+            id: nanoid(),
+            name: "John Doe",
+            age: 30,
+        },
+        {
+            id: nanoid(),
+            name: "Jane Smith",
+            age: 25,
+        },
+        
+    ],    
 };
 
-type DraftTask = Pick<ITask, 'title' | 'discription' | 'priority' | 'dueDate'>;
-const createTask = (data: DraftTask): ITask => {
+type DraftUser = Pick<IUser, 'name' | 'age'>;
+const createUsers = (data: DraftUser): IUser => {
     return {
-        id: nanoid(),       
-        isCompleted: false,
+        id: nanoid(), 
         ...data,
     };
 }
 
-const taskSlice = createSlice({
-    name: 'task',
+const userSlice = createSlice({
+    name: 'user',
     initialState,
     reducers: {
-        addTask (state, action : PayloadAction<DraftTask>) {
-            const taskData = createTask(action.payload);
-            state.tasks.push(taskData);
+        addUser (state, action : PayloadAction<DraftUser>) {
+            const userData = createUsers(action.payload);
+            state.users.push(userData);
+        },        
+        deleteUser: (state, action: PayloadAction<string>) => {
+            state.users = state.users.filter((user) => user.id !== action.payload);
         },
-        toggleCompleteState : (state, action: PayloadAction<string>) => {
-            state.tasks.forEach((task)=>task.id === action.payload ? (task.isCompleted = !task.isCompleted) : task);
-        },
-        deleteTask: (state, action: PayloadAction<string>) => {
-            state.tasks = state.tasks.filter((task) => task.id !== action.payload);
-        },
-        updateTask: (state, action: PayloadAction<ITask>) => {
-            const { id, ...updatedData } = action.payload;
-            const taskIndex = state.tasks.findIndex(task => task.id === id);
-            if (taskIndex !== -1) {
-                state.tasks[taskIndex] = {
-                    ...state.tasks[taskIndex],
-                    ...updatedData,
-                };
-            }
-        },
-        updateFilter : (state, action: PayloadAction<'low' | 'medium' | 'high' | 'all'>) => {
-            state.filter = action.payload;
-        },
-
     },
 });
 
-export const selectTasks = (state: RootState) => {
-    // const f = state.tasks.filter;
-    //    const filter = state.todo.filter;
-    // if (filter === 'low') {                   
-    //         return state.todo.tasks.filter((task)=> task.priority === "low");            
-    // } 
-    // else if (filter === 'medium') {
-    //     return state.todo.tasks.filter((task)=> task.priority === "medium");                
-    // }
-    // else if (filter === 'high') {
-    //     return state.todo.tasks.filter((task)=> task.priority === "high");                
-    // } else {
-        return state.todo.tasks;
-    // }
+export const selectUsers = (state: RootState) => {
+        return state.todoUser.users;  
 }
-export const selectFilter = (state: RootState) => { 
-            // return state.todo.filter;   
-            
-}
-export const {addTask, toggleCompleteState, deleteTask, updateTask, updateFilter} = taskSlice.actions;
 
-export default taskSlice.reducer;
+export const {addUser, deleteUser} = userSlice.actions;
+
+export default userSlice.reducer;
