@@ -17,10 +17,13 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { addTask } from "@/redux/features/task/taskSlice";
-import { useAppDispatch } from "@/redux/hook";
+import { selectUsers } from "@/redux/features/task/userSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
 import type { ITask } from "@/types";
 import { format } from "date-fns";
+
 import { CalendarIcon } from "lucide-react";
+import  { useState } from "react";
 
 
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form"
@@ -32,24 +35,30 @@ export function AddTaskModul() {
       discription: "",
       priority: "",
       dueDate: "",
+      assignedTo: null,
     },
   });
+  const [open, setOpen] = useState(false);
 
   const dispatch = useAppDispatch();
+  const users = useAppSelector(selectUsers)
 
   const onSubmit:SubmitHandler<FieldValues> = (data) => {
 
     const payload = {
       ...data,
       dueDate: data.dueDate ? new Date(data.dueDate).toISOString() : "",
+
     }
    
     dispatch(addTask(payload as ITask));
+    form.reset(); 
+    setOpen(false);
 
   }
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       
         <DialogTrigger asChild>
           <Button >Add Task</Button>
@@ -70,8 +79,8 @@ export function AddTaskModul() {
                 control={form.control}
                 name="title"
                 render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Title</FormLabel>
+                <FormItem >
+                    <FormLabel className="mt-2">Title</FormLabel>
                     <FormControl>
                     <Input {...field} />
                     </FormControl>
@@ -84,7 +93,7 @@ export function AddTaskModul() {
                 name="discription"
                 render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Discription</FormLabel>
+                    <FormLabel className="mt-2">Discription</FormLabel>
                     <FormControl>                    
                     <Textarea  {...field} placeholder="Type your discription here." />
                     </FormControl>                    
@@ -96,7 +105,7 @@ export function AddTaskModul() {
                 name="priority"
                 render={({ field }) => (
                     <FormItem>
-                    <FormLabel>Priority</FormLabel>
+                    <FormLabel className="mt-2">Priority</FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                         <SelectTrigger className="w-full">
@@ -112,12 +121,33 @@ export function AddTaskModul() {
                     </FormItem>
                     )}
                 />
+            <FormField
+                control={form.control}
+                name="assignedTo"
+                render={({ field }) => (
+                    <FormItem>
+                    <FormLabel className="mt-2">Assigned To</FormLabel>
+                    <Select onValueChange={field.onChange}>
+                        <FormControl>
+                        <SelectTrigger className="w-full">
+                            <SelectValue defaultValue={"high"} />
+                        </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {users.map((user) => 
+                            <SelectItem value={user.id} key={user.id}>{user.name}</SelectItem>
+                           ) }  
+                        </SelectContent>
+                    </Select>             
+                    </FormItem>
+                    )}
+                />
                 <FormField
                 control={form.control}
                 name="dueDate"
                 render={({ field }) => (
                     <FormItem className="flex flex-col">
-                    <FormLabel>DueDate</FormLabel>
+                    <FormLabel className="mt-2">DueDate</FormLabel>
                     <Popover>
                         <PopoverTrigger asChild>
                         <FormControl>
