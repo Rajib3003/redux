@@ -56,9 +56,9 @@ export default function TaskCard({ task }: IProps) {
         <CardAction className="absolute top-2 right-2 flex items-center gap-2">
             <Checkbox
                 checked= {task.isCompleted}
-                onClick={() => dispatch(toggleCompleteState(task.id))}
+                onClick={() => dispatch(toggleCompleteState(task._id))}
                 />
-          <Button onClick={() => dispatch(deleteTask(task.id))} variant="link" className="p-0 text-red-500">
+          <Button onClick={() => dispatch(deleteTask(task._id))} variant="link" className="p-0 text-red-500">
             <Trash2  />            
           </Button>      
             <UpdateTaskModul task={task}/> 

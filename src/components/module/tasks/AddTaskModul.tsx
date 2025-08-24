@@ -16,6 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
+import { useCreateTaskMutation } from "@/redux/api/baseApi";
 import { addTask } from "@/redux/features/task/taskSlice";
 import { selectUsers } from "@/redux/features/task/userSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hook";
@@ -42,14 +43,23 @@ export function AddTaskModul() {
 
   const dispatch = useAppDispatch();
   const users = useAppSelector(selectUsers)
+  const [createTask, {data}] = useCreateTaskMutation();
 
-  const onSubmit:SubmitHandler<FieldValues> = (data) => {
+  console.log("Data======", data);
+
+  const onSubmit:SubmitHandler<FieldValues> =async (data) => {
+
+
 
     const payload = {
       ...data,
       dueDate: data.dueDate ? new Date(data.dueDate).toISOString() : "",
 
     }
+
+    const res = await createTask(payload);
+    console.log("Res======", res);
+
    
     dispatch(addTask(payload as ITask));
     form.reset(); 
@@ -121,7 +131,7 @@ export function AddTaskModul() {
                     </FormItem>
                     )}
                 />
-            <FormField
+            {/* <FormField
                 control={form.control}
                 name="assignedTo"
                 render={({ field }) => (
@@ -141,7 +151,7 @@ export function AddTaskModul() {
                     </Select>             
                     </FormItem>
                     )}
-                />
+                /> */}
                 <FormField
                 control={form.control}
                 name="dueDate"
